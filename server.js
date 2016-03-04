@@ -8,7 +8,8 @@ var express = require('express'),
     sqlConfig = require('./sql'),
     connection = mysql.createConnection(sqlConfig);
 
-var test = require('./server/test');
+var test = require('./server/test'),
+    register = require('./server/register');
 
 process.stdin.resume();
 
@@ -41,6 +42,8 @@ app.use("/scripts", express.static(__dirname + "/bower_components"));
 app.use("/", express.static(__dirname + "/client"));
 
 app.get("/test", test.getMe);
+
+app.post("/register", register.register);
 
 server = app.listen(port, function () {
 
