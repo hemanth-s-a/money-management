@@ -1,0 +1,26 @@
+{
+  "name": "money-management",
+  "version": "0.0.1",
+  "description": "Manage Money",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hemanth-s-a/money-management.git"
+  },
+  "author": "Hemanth S A",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hemanth-s-a/money-management/issues"
+  },
+  "homepage": "https://github.com/hemanth-s-a/money-management",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "bower": "^1.4.1",
+    "cors": "^2.7.1",
+    "express": "^4.13.4"
+  }
+}
