@@ -1,11 +1,11 @@
 {
-  "name": "angular-skeleton",
+  "name": "money-management",
   "version": "0.0.1",
-  "homepage": "https://github.com/hemanth-s-a/angular-skeleton",
+  "homepage": "https://github.com/hemanth-s-a/money-management",
   "authors": [
     "Hemanth S A"
   ],
-  "description": "AngularJS Skeleton Web App",
+  "description": "Manage Money",
   "main": "server.js",
   "license": "MIT",
   "dependencies": {
