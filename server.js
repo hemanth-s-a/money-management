@@ -9,6 +9,7 @@ var express = require('express'),
     connection = mysql.createConnection(sqlConfig);
 
 var test = require('./server/test'),
+    login = require('./server/login'),
     register = require('./server/register');
 
 process.stdin.resume();
@@ -42,6 +43,8 @@ app.use("/scripts", express.static(__dirname + "/bower_components"));
 app.use("/", express.static(__dirname + "/client"));
 
 app.get("/test", test.getMe);
+
+app.post("/login", login.login);
 
 app.post("/register", register.register);
 

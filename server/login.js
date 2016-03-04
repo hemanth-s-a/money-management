@@ -7,7 +7,7 @@ exports.login = function(connection) {
                 response.status(500).send("Server error");
             } else {
                 if (rows && rows.data && rows.data.length > 0) {
-                    matchPasswords(rows.data, request.body.password);
+                    matchPasswords(rows.data, request.body.password, response);
                 } else {
                     response.status(200).send({
                         "status": 1
@@ -19,7 +19,20 @@ exports.login = function(connection) {
 };
 
 function matchPasswords(data, password) {
+    console.log(data);
     if (password === data) {
         console.log("Login Success");
+        response.status(200).send({
+            "status": 0
+        });
+    } else {
+        console.log("incorrect password");
+        response.status(200).send({
+            "status": 3
+        });
     }
+};
+
+function prepareFetchUsername() {
+    return 'SELECT * FROM User WHERE username=?';
 };
