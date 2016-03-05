@@ -1,4 +1,11 @@
-exports.login = function(connection) {
+/*
+ * Register status:
+ * 0 - Success
+ * 1 - Username doesn't exist (login)
+ * 2 - Username exists
+ * 3 - Incorrect password
+ */
+ exports.login = function(connection) {
     return function(request, response) {
         var queryString = prepareFetchUsername();
         connection.query(queryString, [request.body.username], function(error, rows, fields) {
@@ -9,8 +16,9 @@ exports.login = function(connection) {
                 if (rows && rows.data && rows.data.length > 0) {
                     matchPasswords(rows.data, request.body.password, response);
                 } else {
-                    response.status(200).send({
-                        "status": 1
+                    response.status(400).send({
+                        "status": 1,
+                        "message": "Username doesn't exist"
                     });
                 }
             }
@@ -27,8 +35,9 @@ function matchPasswords(data, password) {
         });
     } else {
         console.log("incorrect password");
-        response.status(200).send({
-            "status": 3
+        response.status(400).send({
+            "status": 3,
+            "message": "Incorrect password"
         });
     }
 };

@@ -1,4 +1,7 @@
-function registerController($scope, $location, userService) {
+function registerController($scope, $location, userService, userStore) {
+	var self = this;
+	self.userData = userStore;
+
 	var _validate = function() {
 		return $scope.fullname
 			&& $scope.email
@@ -15,9 +18,11 @@ function registerController($scope, $location, userService) {
 				"fullname": $scope.fullname,
 				"email": $scope.email,
 				"password": sha256_digest($scope.password),
+				"gender": $scope.gender,
 				"income": $scope.income
 			}).then(function(result) {
-
+				self.userData.setUsername($scope.username);
+				console.log(result);
 			}, function(error) {
 				console.log(error);
 			});
@@ -27,7 +32,7 @@ function registerController($scope, $location, userService) {
 	};
 };
 
-registerController.$inject = ['$scope', '$location', 'userService'];
+registerController.$inject = ['$scope', '$location', 'userService', 'userStore'];
 
 angular.module('moneyApp')
 .controller('registerController', registerController);

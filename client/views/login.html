@@ -1,0 +1,25 @@
+<span>Enter details to login</span>
+<div>
+	<table>
+		<tr>
+			<td>Username</td>
+			<td>
+				<input type="text" placeholder="Enter your username" maxlength="20" ng-model="username" />
+			</td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td>
+				<input type="password" maxlength="30" ng-model="password" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button ng-click="login()">Login</button>
+			</td>
+			<td>
+				<button ng-click="go('/register')">Register</button>
+			</td>
+		</tr>
+	</table>
+</div>

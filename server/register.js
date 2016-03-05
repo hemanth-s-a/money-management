@@ -1,16 +1,27 @@
+/*
+ * Register status:
+ * 0 - Success
+ * 1 - Username doesn't exist (login)
+ * 2 - Username exists
+ * 3 - Incorrect password
+ */
 exports.register = function(connection) {
     return function(request, response) {
         console.log("Entered");
         var queryString = prepareFetchUsername();
         connection.query(queryString, [request.body.username], function(error, rows, fields) {
             console.log("Received");
+            console.log(rows);
+            console.log(rows.length + rows[0]);
+            console.log(rows[0].username);
             if (error) {
                 console.log(error);
                 response.status(500).send("Server error");
             } else {
-                if (rows && rows.data && rows.data.length > 0) {
-                    response.status(200).send({
-                        "status": 2
+                if (rows.length > 0) {
+                    response.status(400).send({
+                        "status": 2,
+                        "message": "Username exists"
                     });
                 } else {
                     createUser(connection, request, response);
@@ -30,7 +41,9 @@ function createUser(connection, request, response) {
     connection.query(queryString, userData, function(error, rows, fields) {
         if (error) {
             console.log(error);
+            response.status(500).send("Server error");
         } else {
+            console.log(rows);
             response.status(200).send({
                 "status": 0
             });
@@ -44,7 +57,8 @@ function prepareCreateUser() {
 
 function prepareUserDataForCreate(parameters) {
     var data = {
-        "username": parameters.username
+        "username": parameters.username,
+        "password": parameters.password
     };
 
     if (parameters.name) {
