@@ -1,7 +1,9 @@
 exports.register = function(connection) {
     return function(request, response) {
+        console.log("Entered");
         var queryString = prepareFetchUsername();
         connection.query(queryString, [request.body.username], function(error, rows, fields) {
+            console.log("Received");
             if (error) {
                 console.log(error);
                 response.status(500).send("Server error");

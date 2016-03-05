@@ -44,9 +44,11 @@ app.use("/", express.static(__dirname + "/client"));
 
 app.get("/test", test.getMe);
 
-app.post("/login", login.login);
+app.post("/login", login.login(connection));
 
-app.post("/register", register.register);
+app.post("/register", register.register(connection));
+
+console.log("Starting...");
 
 server = app.listen(port, function () {
 

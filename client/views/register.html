@@ -1,0 +1,36 @@
+<span>Enter details to register</span>
+<div>
+	<table>
+		<tr>
+			<td>Full Name</td>
+			<td>
+				<input type="text" placeholder="Enter your fullname" ng-model="fullname" />
+			</td>
+		</tr>
+		<tr>
+			<td>Email{{ email }}</td>
+			<td>
+				<input type="email" maxlength="198" placeholder="Enter your email address" ng-model="email" />
+			</td>
+		</tr>
+		<tr>
+			<td>Username</td>
+			<td>
+				<input type="text" placeholder="Enter a username" maxlength="20" ng-model="username" />
+			</td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td>
+				<input type="password" maxlength="30" ng-model="password" />
+			</td>
+		</tr>
+		<tr>
+			<td>Repeat Password</td>
+			<td>
+				<input type="password" maxlength="30" ng-model="repeatPassword" />
+			</td>
+		</tr>
+	</table>
+	<button ng-click="register()">Register</button>
+</div>
