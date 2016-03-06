@@ -11,7 +11,9 @@ CREATE TABLE User (
 CREATE TABLE ExpenseType (
     id int PRIMARY KEY AUTO_INCREMENT,
     name varchar(50) NOT NULL,
-    description varchar(200)
+    description varchar(200),
+    parentId int DEFAULT NULL,
+    FOREIGN KEY(parentId) REFERENCES ExpenseType(id) ON UPDATE cascade ON DELETE cascade
 );
 
 CREATE TABLE Expenses (

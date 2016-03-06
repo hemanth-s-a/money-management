@@ -34,6 +34,10 @@ exports.getExpenseTypes = function(connection) {
 	};
 };
 
+function prepareGetExpenseTypes() {
+	return 'SELECT * FROM ExpenseType WHERE parentId IS NULL';
+};
+
 function prepareSaveExpense() {
 	return 'INSERT INTO Expenses SET ?';
 };
