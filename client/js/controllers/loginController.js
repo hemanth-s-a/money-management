@@ -14,7 +14,8 @@ function loginController($scope, $location, userService, userStore) {
 				"username": $scope.username,
 				"password": sha256_digest($scope.password)
 			}).then(function(result) {
-				self.userData.setUsername($scope.username);
+				self.userData.setName(result.data.name);
+				self.userData.setId(result.data.id);
 				console.log(result);
 			}, function(error) {
 				console.log(error);

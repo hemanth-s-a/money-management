@@ -8,14 +8,21 @@ CREATE TABLE User (
     income double DEFAULT NULL
 );
 
+CREATE TABLE ExpenseType (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar(50) NOT NULL,
+    description varchar(200)
+);
+
 CREATE TABLE Expenses (
     id bigint PRIMARY KEY AUTO_INCREMENT,
     amount double NOT NULL,
-    date datetime NOT NULL,
-    transaction_type int NOT NULL,
+    date datetime NOT NULL DEFAULT NOW(),
     credit_debit int NOT NULL,
     transaction_name varchar(200) DEFAULT 'Unknown',
     description varchar(1000) DEFAULT NULL,
     user int NOT NULL,
-    FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE no action
+    FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE no action,
+    type int,
+    FOREIGN KEY(type) REFERENCES ExpenseType(id) ON UPDATE cascade ON DELETE no action
 );

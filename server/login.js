@@ -13,8 +13,8 @@
                 console.log(error);
                 response.status(500).send("Server error");
             } else {
-                if (rows && rows.data && rows.data.length > 0) {
-                    matchPasswords(rows.data, request.body.password, response);
+                if (rows && rows.length > 0) {
+                    matchPasswords(rows, request.body.password, response);
                 } else {
                     response.status(400).send({
                         "status": 1,
@@ -26,12 +26,16 @@
     };
 };
 
-function matchPasswords(data, password) {
+function matchPasswords(data, password, response) {
     console.log(data);
-    if (password === data) {
+    if (password === data[0].password) {
         console.log("Login Success");
         response.status(200).send({
-            "status": 0
+            "status": 0,
+            "data": {
+                "id": data[0].id,
+                "name": data[0].name
+            }
         });
     } else {
         console.log("incorrect password");

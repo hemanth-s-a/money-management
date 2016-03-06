@@ -7,13 +7,9 @@
  */
 exports.register = function(connection) {
     return function(request, response) {
-        console.log("Entered");
         var queryString = prepareFetchUsername();
         connection.query(queryString, [request.body.username], function(error, rows, fields) {
-            console.log("Received");
             console.log(rows);
-            console.log(rows.length + rows[0]);
-            console.log(rows[0].username);
             if (error) {
                 console.log(error);
                 response.status(500).send("Server error");
@@ -43,9 +39,12 @@ function createUser(connection, request, response) {
             console.log(error);
             response.status(500).send("Server error");
         } else {
-            console.log(rows);
+            console.log(rows.insertId);
             response.status(200).send({
-                "status": 0
+                "status": 0,
+                "data": {
+                    "id": rows.insertId
+                }
             });
         }
     });

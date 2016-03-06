@@ -1,7 +1,7 @@
 function mainViewController($scope, userStore) {
 	$scope.isLoggedIn = false;
 	$scope.$on('login-success', function() {
-		$scope.username = userStore.getUsername();
+		$scope.name = userStore.getName();
 		$scope.isLoggedIn = true;
 	});
 };

@@ -6,11 +6,12 @@ var express = require('express'),
 	server,
     mysql = require('mysql'),
     sqlConfig = require('./sql'),
-    connection = mysql.createConnection(sqlConfig);
+    connection = mysql.createConnection(sqlConfig),
 
-var test = require('./server/test'),
+    test = require('./server/test'),
     login = require('./server/login'),
-    register = require('./server/register');
+    register = require('./server/register'),
+    expenses = require('./server/expenses');
 
 process.stdin.resume();
 
@@ -47,6 +48,9 @@ app.get("/test", test.getMe);
 app.post("/login", login.login(connection));
 
 app.post("/register", register.register(connection));
+
+app.get("/expenseTypes", expenses.getExpenseTypes(connection));
+app.post("/expense", expenses.saveExpense(connection));
 
 console.log("Starting...");
 
