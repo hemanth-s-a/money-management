@@ -18,7 +18,7 @@ function expenseService($http) {
 			},
 			"data": {
 				"userId": data.userId,
-				"type": data.type,
+				"expenseType": data.type,
 				"amount": data.amount,
 				"creditDebit": 1,
 				"date": data.date,
