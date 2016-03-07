@@ -42,7 +42,7 @@ function createUser(connection, request, response) {
             console.log(rows.insertId);
             response.status(200).send({
                 "status": 0,
-                "data": {
+                "userData": {
                     "id": rows.insertId
                 }
             });

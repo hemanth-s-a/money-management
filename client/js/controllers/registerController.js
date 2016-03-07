@@ -21,9 +21,10 @@ function registerController($scope, $location, userService, userStore) {
 				"gender": $scope.gender,
 				"income": $scope.income
 			}).then(function(result) {
-				self.userData.setName(result.data.name);
-				self.userData.setId(result.data.id);
+				self.userData.setName(result.data.userData.name);
+				self.userData.setId(result.data.userData.id);
 				console.log(result);
+				$location.path('/home');
 			}, function(error) {
 				console.log(error);
 			});

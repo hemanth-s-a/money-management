@@ -14,9 +14,10 @@ function loginController($scope, $location, userService, userStore) {
 				"username": $scope.username,
 				"password": sha256_digest($scope.password)
 			}).then(function(result) {
-				self.userData.setName(result.data.name);
-				self.userData.setId(result.data.id);
+				self.userData.setName(result.data.userData.name);
+				self.userData.setId(result.data.userData.id);
 				console.log(result);
+				$location.path('/home');
 			}, function(error) {
 				console.log(error);
 			});

@@ -1,0 +1,44 @@
+<span>Enter expense details</span>
+<div ng-init="initExpenses()">
+	<table>
+		<tr>
+			<td>Expense Type</td>
+			<td>
+				<select ng-model="expenseTypeId">
+					<option ng-repeat="expenseType in expenseTypes" ng-value="expenseType.id">
+						{{expenseType.name}}
+					</option>
+				</select>
+			</td>
+		</tr>
+		<tr ng-show="showExpenseSubType">
+			<td>Expense Sub Category</td>
+			<td>
+				<select ng-model="expenseSubTypeId">
+					<option ng-repeat="expenseSubType in expenseSubTypes" ng-value="expenseSubType.id">
+						{{expenseSubType.name}}
+					</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Description</td>
+			<td>
+				<input type="text" placeholder="Enter description" ng-model="description" />
+			</td>
+		</tr>
+		<tr>
+			<td>Amount</td>
+			<td>
+				<input type="number" step="0.01" placeholder="Enter amount" ng-model="amount" />
+			</td>
+		</tr>
+		<tr>
+			<td>Date</td>
+			<td>
+				<input type="date" ng-model="date" />
+			</td>
+		</tr>
+	</table>
+	<button ng-click="addExpense()">Add expense</button>
+</div>

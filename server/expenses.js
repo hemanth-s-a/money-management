@@ -2,12 +2,15 @@ exports.saveExpense = function(connection) {
 	return function(request, response) {
 		var queryString = prepareSaveExpense(),
 			expenseData = prepareExpenseData(request.body);
+		console.log("Inserting expenses");
 		connection.query(queryString, expenseData, function(error, rows, fields) {
 			if (error) {
 				console.log(error);
+				console.log("Error adding expense");
 				response.status(500).send("Server error");
 			} else {
 				console.log(rows);
+				console.log("Expense added");
 				response.status(200).send({
 					"status": 0
 				});
@@ -18,8 +21,13 @@ exports.saveExpense = function(connection) {
 
 exports.getExpenseTypes = function(connection) {
 	return function(request, response) {
-		var queryString = prepareGetExpenseTypes();
-		connection.query(queryString, function(error, rows, fields) {
+		var queryString, queryData = [];
+		queryString = prepareGetExpenseTypes(request.query.parentId);
+		if (request.query.parentId) {
+			queryData = [request.query.parentId];
+		}
+		console.log(queryString, queryData);
+		connection.query(queryString, queryData, function(error, rows, fields) {
 			if (error) {
 				console.log(error);
 				response.status(500).send("Server error");
@@ -27,15 +35,17 @@ exports.getExpenseTypes = function(connection) {
 				console.log(rows);
 				response.status(200).send({
 					"status": 0,
-					"data": rows
+					"expenseTypes": rows
 				});
 			}
 		});
 	};
 };
 
-function prepareGetExpenseTypes() {
-	return 'SELECT * FROM ExpenseType WHERE parentId IS NULL';
+function prepareGetExpenseTypes(subType) {
+	return subType ? 
+		'SELECT * FROM ExpenseType WHERE parentId=?' :
+		'SELECT * FROM ExpenseType WHERE parentId IS NULL';
 };
 
 function prepareSaveExpense() {

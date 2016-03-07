@@ -6,7 +6,6 @@ function userStore($rootScope) {
 
 		setUsername: function(username) {
 			this.username = username;
-			$rootScope.$broadcast('login-success');
 		},
 		getUsername: function() {
 			return this.username;
@@ -14,6 +13,7 @@ function userStore($rootScope) {
 
 		setId: function(id) {
 			this.id = id;
+			$rootScope.$broadcast('login-success');
 		},
 		getId: function() {
 			return this.id;

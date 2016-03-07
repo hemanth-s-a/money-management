@@ -3,10 +3,10 @@ angular.module('moneyApp', ['ngRoute'])
 '$routeProvider',
 function($routeProvider) {
 	$routeProvider
-		.when('/', {
-			templateUrl: 'views/main.html',
-			controller: 'mainController'
-		})
+		// .when('/', {
+		// 	templateUrl: 'views/main.html',
+		// 	controller: 'mainController'
+		// })
 
 		.when('/login', {
 			templateUrl: 'views/login.html',
@@ -18,5 +18,18 @@ function($routeProvider) {
 			controller: 'registerController'
 		})
 
-		.otherwise({redirectTo: '/'});
+		.when('/addExpense', {
+			templateUrl: 'views/addExpense.html',
+			controller: 'expenseController'
+		})
+
+		.when('/home', {
+			templateUrl: 'views/home.html'
+		})
+
+		.when('/addSuccess', {
+			templateUrl: 'views/addSuccess.html'
+		})
+
+		.otherwise({redirectTo: '/login'});
 }]);

@@ -32,7 +32,7 @@ function matchPasswords(data, password, response) {
         console.log("Login Success");
         response.status(200).send({
             "status": 0,
-            "data": {
+            "userData": {
                 "id": data[0].id,
                 "name": data[0].name
             }

@@ -14,15 +14,26 @@
 	<script src="js/controllers/mainViewController.js"></script>
 	<script src="js/controllers/loginController.js"></script>
 	<script src="js/controllers/registerController.js"></script>
+	<script src="js/controllers/expenseController.js"></script>
 
 	<script src="js/services/userService.js"></script>
+	<script src="js/services/expenseService.js"></script>
 
 	<script src="js/factories/userStore.js"></script>
 </head>
 <body>
 	<h1>Welcome to Money Management App</h1>
 	<div ng-show="isLoggedIn" ng-controller="mainViewController">
-		Logged in as {{ name }}
+		<div>
+			Logged in as {{ name }}
+		</div>
+		<table>
+			<tr>
+				<td>
+					<a href="#/addExpense">Add expense</a>
+				</td>
+			</tr>
+		</table>
 	</div>
 	<div ng-view>
 	</div>
