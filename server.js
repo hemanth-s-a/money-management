@@ -1,4 +1,5 @@
 var express = require('express'),
+    morgan = require('morgan'),
 	cors = require('cors'),
 	bodyParser = require('body-parser'),
 	app = express(),
@@ -7,6 +8,8 @@ var express = require('express'),
     mysql = require('mysql'),
     sqlConfig = require('./sql'),
     connection = mysql.createConnection(sqlConfig),
+    // logger = require('./server/logger'),
+    // log = logger.logger,
 
     test = require('./server/test'),
     login = require('./server/login'),
@@ -35,6 +38,7 @@ process.on('SIGINT', exitHandler.bind(null, {exit:true}));
 process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 app.use(cors());
+app.use(morgan(':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms'));
 app.use(bodyParser.json());
 
 connection.connect();
