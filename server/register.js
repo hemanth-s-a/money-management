@@ -8,13 +8,16 @@
 exports.register = function(connection) {
     return function(request, response) {
         var queryString = prepareFetchUsername();
+        connection.connect();
         connection.query(queryString, [request.body.username], function(error, rows, fields) {
             console.log(rows);
             if (error) {
+                connection.end();
                 console.log(error);
                 response.status(500).send("Server error");
             } else {
                 if (rows.length > 0) {
+                    connection.end();
                     response.status(400).send({
                         "status": 2,
                         "message": "Username exists"
@@ -36,9 +39,11 @@ function createUser(connection, request, response) {
         userData = prepareUserDataForCreate(request.body);
     connection.query(queryString, userData, function(error, rows, fields) {
         if (error) {
+            connection.end();
             console.log(error);
             response.status(500).send("Server error");
         } else {
+            connection.end();
             console.log(rows.insertId);
             response.status(200).send({
                 "status": 0,

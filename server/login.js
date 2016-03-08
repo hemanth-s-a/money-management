@@ -8,11 +8,14 @@
  exports.login = function(connection) {
     return function(request, response) {
         var queryString = prepareFetchUsername();
+        connection.connect();
         connection.query(queryString, [request.body.username], function(error, rows, fields) {
             if (error) {
+                connection.end();
                 console.log(error);
                 response.status(500).send("Server error");
             } else {
+                connection.end();
                 if (rows && rows.length > 0) {
                     matchPasswords(rows, request.body.password, response);
                 } else {

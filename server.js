@@ -41,7 +41,7 @@ app.use(cors());
 app.use(morgan(':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms'));
 app.use(bodyParser.json());
 
-connection.connect();
+// connection.connect();
 
 app.use("/scripts", express.static(__dirname + "/bower_components"));
 
