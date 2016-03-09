@@ -3,3 +3,5 @@ bower_components/
 
 sql.json
 *.txt
+
+server/logger.js

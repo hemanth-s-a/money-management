@@ -5,25 +5,25 @@
  * 2 - Username exists
  * 3 - Incorrect password
  */
-exports.register = function(connection) {
+var mysql = require('./db');
+
+exports.register = function() {
     return function(request, response) {
         var queryString = prepareFetchUsername();
-        connection.connect();
-        connection.query(queryString, [request.body.username], function(error, rows, fields) {
+        // connection.connect();
+        mysql.getQuery(queryString, [request.body.username], function(error, rows, fields) {
             console.log(rows);
             if (error) {
-                connection.end();
                 console.log(error);
                 response.status(500).send("Server error");
             } else {
                 if (rows.length > 0) {
-                    connection.end();
                     response.status(400).send({
                         "status": 2,
                         "message": "Username exists"
                     });
                 } else {
-                    createUser(connection, request, response);
+                    createUser(request, response);
                 }
             }
         });
@@ -34,16 +34,14 @@ function prepareFetchUsername() {
     return 'SELECT * FROM User WHERE username=?';
 };
 
-function createUser(connection, request, response) {
+function createUser(request, response) {
     var queryString = prepareCreateUser(),
         userData = prepareUserDataForCreate(request.body);
-    connection.query(queryString, userData, function(error, rows, fields) {
+    mysql.insertQuery(queryString, userData, function(error, rows, fields) {
         if (error) {
-            connection.end();
             console.log(error);
             response.status(500).send("Server error");
         } else {
-            connection.end();
             console.log(rows.insertId);
             response.status(200).send({
                 "status": 0,

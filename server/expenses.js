@@ -1,17 +1,17 @@
-exports.saveExpense = function(connection) {
+var mysql = require('./db');
+
+exports.saveExpense = function() {
 	return function(request, response) {
 		var queryString = prepareSaveExpense(),
 			expenseData = prepareExpenseData(request.body);
-		connection.connect();
+		// connection.connect();
 		console.log("Inserting expenses");
-		connection.query(queryString, expenseData, function(error, rows, fields) {
+		mysql.query(queryString, expenseData, function(error, rows, fields) {
 			if (error) {
-				connection.end();
 				console.log(error);
 				console.log("Error adding expense");
 				response.status(500).send("Server error");
 			} else {
-				connection.end();
 				console.log(rows);
 				console.log("Expense added");
 				response.status(200).send({
@@ -22,22 +22,20 @@ exports.saveExpense = function(connection) {
 	};
 };
 
-exports.getExpenseTypes = function(connection) {
+exports.getExpenseTypes = function() {
 	return function(request, response) {
 		var queryString, queryData = [];
 		queryString = prepareGetExpenseTypes(request.query.parentId);
-		connection.connect();
+		// connection.connect();
 		if (request.query.parentId) {
 			queryData = [request.query.parentId];
 		}
 		console.log(queryString, queryData);
-		connection.query(queryString, queryData, function(error, rows, fields) {
+		mysql.query(queryString, queryData, function(error, rows, fields) {
 			if (error) {
-				connection.end();
 				console.log(error);
 				response.status(500).send("Server error");
 			} else {
-				connection.end();
 				console.log(rows);
 				response.status(200).send({
 					"status": 0,

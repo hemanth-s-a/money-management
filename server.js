@@ -5,9 +5,9 @@ var express = require('express'),
 	app = express(),
 	port = process.env.MONEY_PORT || 9899,
 	server,
-    mysql = require('mysql'),
-    sqlConfig = require('./sql'),
-    connection = mysql.createConnection(sqlConfig),
+    // mysql = require('mysql'),
+    // sqlConfig = require('./sql'),
+    // connection = mysql.createPool(sqlConfig),
     // logger = require('./server/logger'),
     // log = logger.logger,
 
@@ -22,7 +22,7 @@ function exitHandler(options, err) {
     if (options.cleanup) console.log('clean');
     if (err) console.log(err.stack);
     if (options.exit) {
-        connection.end();
+        // connection.end();
         console.log("exiting...");
         process.exit();
     }
@@ -49,12 +49,12 @@ app.use("/", express.static(__dirname + "/client"));
 
 app.get("/test", test.getMe);
 
-app.post("/login", login.login(connection));
+app.post("/login", login.login());
 
-app.post("/register", register.register(connection));
+app.post("/register", register.register());
 
-app.get("/expenseTypes", expenses.getExpenseTypes(connection));
-app.post("/expense", expenses.saveExpense(connection));
+app.get("/expenseTypes", expenses.getExpenseTypes());
+app.post("/expense", expenses.saveExpense());
 
 console.log("Starting...");
 
