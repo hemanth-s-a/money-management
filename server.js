@@ -46,6 +46,7 @@ app.use(bodyParser.json());
 app.use("/scripts", express.static(__dirname + "/bower_components"));
 
 app.use("/", express.static(__dirname + "/client"));
+app.use("/web", express.static(__dirname + "/web"));
 
 app.get("/test", test.getMe);
 
@@ -54,6 +55,7 @@ app.post("/login", login.login());
 app.post("/register", register.register());
 
 app.get("/expenseTypes", expenses.getExpenseTypes());
+app.get("/expense", expenses.getExpenses());
 app.post("/expense", expenses.saveExpense());
 
 console.log("Starting...");

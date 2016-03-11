@@ -6,3 +6,4 @@ sql.json
 *.log
 
 server/logger.js
+web/

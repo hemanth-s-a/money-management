@@ -58,6 +58,18 @@ function expenseController($scope, $location, expenseService, userStore) {
 		}
 	};
 
+	$scope.getExpenses = function() {
+		if(!self.userData.getId()) return;
+		expenseService.getExpenses({
+			"userId": self.userData.getId()
+		}).then(function(result) {
+			console.log(result);
+			$scope.expenseStore = result.data.expenses;
+		}, function(error) {
+			console.log(error);
+		});
+	};
+
 	$scope.$watch('expenseTypeId', function(newValue, oldValue) {
 		$scope.expenseSubType = null;
 		if (!$scope.expenseTypeId) {

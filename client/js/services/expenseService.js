@@ -26,6 +26,16 @@ function expenseService($http) {
 			}
 		});
 	};
+
+	this.getExpenses = function(data) {
+		return $http({
+			"method": "GET",
+			"url": "/expense",
+			"params": {
+				"userId": data.userId
+			}
+		});
+	};
 };
 
 expenseService.$inject = ['$http'];

@@ -23,6 +23,11 @@ function($routeProvider) {
 			controller: 'expenseController'
 		})
 
+		.when('/getExpense', {
+			templateUrl: 'views/getExpenses.html',
+			controller: 'expenseController'
+		})
+
 		.when('/home', {
 			templateUrl: 'views/home.html'
 		})
