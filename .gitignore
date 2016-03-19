@@ -7,3 +7,4 @@ sql.json
 
 server/logger.js
 web/
+log/
