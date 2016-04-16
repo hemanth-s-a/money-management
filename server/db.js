@@ -4,24 +4,28 @@ var mysql = require('mysql'),
 
 exports.getQuery = function(query, data, callback) {
     pool.getConnection(function(error, connection) {
-        connection.release();
         if (error) {
             console.error("MySQL query: " + query + "data: " + data);
             callback(error);
         } else {
-            connection.query(query, data, callback);
+            connection.query(query, data, function(error, rows, fields) {
+                connection.release();
+                callback(error, rows, fields);
+            });
         }
     });
 };
 
 exports.query = function(query, data, callback) {
     pool.getConnection(function(error, connection) {
-        connection.release();
         if (error) {
             console.error("MySQL query: " + query + "data: " + data);
             callback(error);
         } else {
-            connection.query(query, data, callback);
+            connection.query(query, data, function(error, rows, fields) {
+                connection.release();
+                callback(error, rows, fields);
+            });
         }
     });
 };
