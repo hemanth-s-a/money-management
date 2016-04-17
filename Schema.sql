@@ -19,6 +19,7 @@ CREATE TABLE ExpenseType (
 CREATE TABLE Expenses (
     id bigint PRIMARY KEY AUTO_INCREMENT,
     amount double NOT NULL,
+    amount_after_credits NOT NULL,
     date datetime NOT NULL DEFAULT NOW(),
     credit_debit int NOT NULL,
     transaction_name varchar(200) DEFAULT 'Unknown',
@@ -26,5 +27,37 @@ CREATE TABLE Expenses (
     user int NOT NULL,
     FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE no action,
     type int,
-    FOREIGN KEY(type) REFERENCES ExpenseType(id) ON UPDATE cascade ON DELETE no action
+    FOREIGN KEY(type) REFERENCES ExpenseType(id) ON UPDATE cascade ON DELETE no action,
+    deleted int DEFAULT 0,
+    deleted_date datetime DEFAULT NULL
 );
+
+CREATE TABLE Credit (
+    id bigint PRIMARY KEY AUTO_INCREMENT,
+    amount double NOT NULL,
+    date datetime NOT NULL DEFAULT NOW(),
+    remaining_amount NOT NULL,
+    user int NOT NULL,
+    FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE no action
+);
+
+CREATE TABLE CreditType (
+    credit bigint NOT NULL,
+    FOREIGN KEY(credit) REFERENCES Credit(id) ON UPDATE cascade ON DELETE cascade,
+    type int,
+    FOREIGN KEY(type) REFERENCES ExpenseType(id) ON UPDATE cascade ON DELETE no action,
+    PRIMARY KEY(credit, type)
+);
+
+CREATE TABLE CreditsApplied (
+    id bigint PRIMARY KEY AUTO_INCREMENT,
+    amount double NOT NULL,
+    date datetime NOT NULL DEFAULT NOW(),
+    deleted int DEFAULT 0,
+    deleted_date datetime DEFAULT NULL,
+    credit bigint NOT NULL,
+    FOREIGN KEY(credit) REFERENCES Credit(id) ON UPDATE cascade ON DELETE no action,
+    expense bigint NOT NULL,
+    FOREIGN KEY(expense) REFERENCES Expenses(id) ON UPDATE cascade ON DELETE no action
+);
+

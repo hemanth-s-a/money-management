@@ -1,8 +1,15 @@
 var mysql = require('./db');
 
-exports.saveExpense = function() {
+/**
+ * Add an expense to the given user
+ * @return {undefined} doesn't return anything
+ * HTTP POST body parameters
+ * @param {integer} expenseType Category for the expense
+ * @param {double} amount Amount of expense
+ */
+exports.addExpense = function() {
 	return function(request, response) {
-		var queryString = prepareSaveExpense(),
+		var queryString = prepareAddExpense(),
 			expenseData = prepareExpenseData(request.body);
 		// connection.connect();
 		console.log("Inserting expenses");
@@ -22,6 +29,10 @@ exports.saveExpense = function() {
 	};
 };
 
+/**
+ * Retrieve all expenses for a given user
+ * @return {undefined} doesn't return anything
+ */
 exports.getExpenses = function() {
 	return function(request, response) {
 		var queryAndData = prepareGetExpense(request.query);
@@ -92,7 +103,7 @@ function prepareGetExpenseTypes(subType) {
 		'SELECT * FROM ExpenseType WHERE parentId IS NULL';
 };
 
-function prepareSaveExpense() {
+function prepareAddExpense() {
 	return 'INSERT INTO Expenses SET ?';
 };
 

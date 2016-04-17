@@ -37,6 +37,7 @@ process.on('SIGINT', exitHandler.bind(null, {exit:true}));
 //catches uncaught exceptions
 process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
+// app.use(cookie)
 app.use(cors());
 app.use(morgan(':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms'));
 app.use(bodyParser.json());
@@ -56,7 +57,7 @@ app.post("/register", register.register());
 
 app.get("/expenseTypes", expenses.getExpenseTypes());
 app.get("/expense", expenses.getExpenses());
-app.post("/expense", expenses.saveExpense());
+app.post("/expense", expenses.addExpense());
 
 console.log("Starting...");
 
