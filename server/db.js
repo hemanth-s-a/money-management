@@ -1,5 +1,5 @@
 var mysql = require('mysql'),
-    sqlConfig = require('../sql'),
+    sqlConfig = require('../../sql'),
     pool = mysql.createPool(sqlConfig);
 
 exports.getQuery = function(query, data, callback) {

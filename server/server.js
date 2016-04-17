@@ -11,10 +11,10 @@ var express = require('express'),
     // logger = require('./server/logger'),
     // log = logger.logger,
 
-    test = require('./server/test'),
-    login = require('./server/login'),
-    register = require('./server/register'),
-    expenses = require('./server/expenses');
+    test = require('./test'),
+    login = require('./login'),
+    register = require('./register'),
+    expenses = require('./expenses');
 
 process.stdin.resume();
 
@@ -43,10 +43,10 @@ app.use(bodyParser.json());
 
 // connection.connect();
 
-app.use("/scripts", express.static(__dirname + "/bower_components"));
+app.use("/scripts", express.static("bower_components"));
 
-app.use("/", express.static(__dirname + "/client"));
-app.use("/web", express.static(__dirname + "/web"));
+app.use("/", express.static("dist/client"));
+app.use("/web", express.static("web"));
 
 app.get("/test", test.getMe);
 
