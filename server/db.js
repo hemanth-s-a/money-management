@@ -29,3 +29,26 @@ exports.query = function(query, data, callback) {
         }
     });
 };
+
+exports.transaction = function(callback) {
+    pool.getConnection((error, connection) => {
+        if (error) {
+            callback(error);
+        }
+        connection.beginTransaction((error) => {
+            callback(error, connection);
+        });
+    });
+};
+
+exports.transactionQuery = function(connection, query, data, callback) {
+    connection.query(query, data, (error, rows, fields) => {
+        if (error) {
+            console.error("MySQL query: " + query + "data: " + data);
+            connection.rollback(() => {
+                callback(error);
+            });
+        }
+        callback(error, rows, fields);
+    });
+};
