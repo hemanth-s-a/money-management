@@ -1,4 +1,5 @@
 var mysql = require('./db');
+var transactionsBL = require('./bl/transactions');
 
 exports.saveExpense = function() {
 	return function(request, response) {
@@ -24,15 +25,11 @@ exports.saveExpense = function() {
 
 exports.getExpenses = function() {
 	return function(request, response) {
-		var queryAndData = prepareGetExpense(request.query);
-		console.log("Getting expenses");
-		mysql.query(queryAndData.query, queryAndData.data, function(error, rows, fields) {
+		transactionsBL.getExpenses(request.query.userId, (error, rows, fields) => {
 			if (error) {
-				console.log(error);
-				console.error("Error getting expenses");
+				console.log(error)
 				response.status(500).send("Server error");
 			} else {
-				console.log(rows);
 				response.status(200).send({
 					"expenses": rows
 				});
@@ -62,27 +59,6 @@ exports.getExpenseTypes = function() {
 				});
 			}
 		});
-	};
-};
-
-function prepareGetExpense(parameters) {
-	var query, data = [];
-
-	query = 'SELECT * FROM Expenses WHERE';
-
-	if (!parameters.userId) {
-		return {
-			"query": ' user IS NULL',
-			"data": []
-		};
-	} else {
-		query += ' user=?';
-		data.push(parameters.userId);
-	}
-
-	return {
-		"query": query,
-		"data": data
 	};
 };
 

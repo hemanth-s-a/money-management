@@ -14,7 +14,8 @@ var express = require('express'),
     test = require('./test'),
     login = require('./login'),
     register = require('./register'),
-    expenses = require('./expenses');
+    expenses = require('./expenses'),
+    labels = require('./label');
 
 process.stdin.resume();
 
@@ -57,6 +58,9 @@ app.post("/register", register.register());
 app.get("/expenseTypes", expenses.getExpenseTypes());
 app.get("/expense", expenses.getExpenses());
 app.post("/expense", expenses.saveExpense());
+
+app.get("/label", labels.getLabels());
+app.post("/label", labels.createLabel());
 
 console.log("Starting...");
 

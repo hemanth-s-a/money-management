@@ -1,5 +1,5 @@
 var mysql = require('mysql'),
-    sqlConfig = require('../../sql'),
+    sqlConfig = require(process.env.RUN_ENV === 'prod' ? '../../sql' : '../../sql_dev'),
     pool = mysql.createPool(sqlConfig);
 
 exports.getQuery = function(query, data, callback) {
@@ -38,6 +38,17 @@ exports.transaction = function(callback) {
         connection.beginTransaction((error) => {
             callback(error, connection);
         });
+    });
+};
+
+exports.endTransaction = function(connection) {
+    connection.commit((error) => {
+        if (error) {
+            connection.rollback();
+            console.log(error);
+        } else {
+            connection.release();
+        }
     });
 };
 

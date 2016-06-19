@@ -25,9 +25,25 @@ CREATE TABLE Expenses (
     description varchar(1000) DEFAULT NULL,
     total_remaining double NOT NULL,
     user int NOT NULL,
-    FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE no action,
+    FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE cascade,
     type int,
-    FOREIGN KEY(type) REFERENCES ExpenseType(id) ON UPDATE cascade ON DELETE no action
+    FOREIGN KEY(type) REFERENCES ExpenseType(id) ON UPDATE cascade ON DELETE SET NULL
+);
+
+CREATE TABLE Labels (
+    id bigint PRIMARY KEY AUTO_INCREMENT,
+    name varchar(200) NOT NULL,
+    active int NOT NULL DEFAULT (1),
+    user int NOT NULL,
+    FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE cascade
+);
+
+CREATE TABLE AppliedLabels (
+    transaction  bigint NOT NULL,
+    FOREIGN KEY(transaction) REFERENCES Expenses(id) ON UPDATE cascade ON DELETE cascade,
+    label bigint NOT NULL,
+    FOREIGN KEY(label) REFERENCES Labels(id) ON UPDATE cascade ON DELETE cascade,
+    PRIMARY KEY(transaction, label)
 );
 
 CREATE TABLE Credits (
