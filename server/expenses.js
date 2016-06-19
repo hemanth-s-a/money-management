@@ -3,23 +3,33 @@ var transactionsBL = require('./bl/transactions');
 
 exports.saveExpense = function() {
 	return function(request, response) {
-		var queryString = prepareSaveExpense(),
-			expenseData = prepareExpenseData(request.body);
-		// connection.connect();
-		console.log("Inserting expenses");
-		mysql.query(queryString, expenseData, function(error, rows, fields) {
-			if (error) {
-				console.log(error);
-				console.log("Error adding expense");
-				response.status(500).send("Server error");
-			} else {
-				console.log(rows);
-				console.log("Expense added");
-				response.status(200).send({
-					"status": 0
-				});
+		transactionsBL.saveExpense(
+			request.body.userId,
+			request.body.expenseType,
+			request.body.amount,
+			request.body.creditDebit,
+			request.body.date,
+			request.body.description,
+			request.body.labels,
+			(error, rows, fields) => {
+				if (error && error.status != 3) {
+					console.log(error);
+					response.status(500).send("Server error");
+					return;
+				} else if (error && error.status == 3) {
+					console.log(error);
+					response.status(200).send({
+						"status": 3,
+						"message": "Failed to attach labels"
+					});
+				} else {
+					console.log("Expense added");
+					response.status(200).send({
+						"status": 0
+					});
+				}
 			}
-		});
+		);
 	};
 };
 

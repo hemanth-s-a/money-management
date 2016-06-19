@@ -24,6 +24,29 @@ exports.getLabels = function(userId, active, callback) {
     mysql.query(queryAndData.query, queryAndData.data, callback);
 };
 
+exports.addLabels = function(transactionId, labels, callback) {
+    if (!transactionId) {
+        callback("TransactionID isn't specified");
+        return;
+    }
+    if (labels.length < 1) {
+        callback("No labels to be added");
+        return;
+    }
+    let queryAndData = prepareAddLabels(transactionId, labels);
+    console.log(labels.length + "labels to be added");
+    mysql.query(queryAndData.query, queryAndData.data, callback);
+};
+
+function prepareAddLabels(transactionId, labels) {
+    let query = 'INSERT INTO AppliedLabels (transaction, label) VALUES ?',
+        data;
+
+    data = labels.map((labelId) => {
+        return [transactionId, labelId];
+    });
+};
+
 function prepareGetLabel(userId, active) {
     let query, data = [];
 

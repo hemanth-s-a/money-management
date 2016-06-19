@@ -30,3 +30,18 @@ exports.getLabels = function() {
         });
     };
 };
+
+exports.addLabels = function() {
+    return function(request, response) {
+        labelBL.addLabels(request.body.transactionId, request.body.labels, (error, rows, fields) => {
+            if (error) {
+                console.log(error);
+                response.status(500).send("Server error");
+                return;
+            }
+            response.status(200).send({
+                "status": 0
+            });
+        });
+    };
+};

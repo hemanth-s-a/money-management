@@ -1,5 +1,6 @@
 import mysql from '../db';
 import BigDecimal from 'big-decimal';
+import label from './label.js';
 
 let self = this;
 
@@ -32,6 +33,35 @@ exports.getExpense = function(userId, transactionId, callback) {
     let queryAndData = prepareGetExpense(userId, transactionId);
     console.log("Getting expense");
     mysql.query(queryAndData.query, queryAndData.data, callback);
+};
+
+exports.saveExpense = function(userId, expenseType, amount, creditDebit, date, description, labels, callback) {
+    if (!userId || !amount || !creditDebit) {
+        callback("Missing data");
+        return;
+    }
+    let queryAndData = prepareSaveExpense(userId, expenseType, amount, creditDebit, date, description);
+    console.log("Adding expense");
+    mysql.query(queryAndData.query, queryAndData.data, (error, rows, fields) => {
+        if (error) {
+            callback(error);
+            return;
+        }
+        if (labels && labels.length <= 0) {
+            callback(error, rows, fields);
+            return;
+        }
+        label.addLabels(rows.insertId, labels, (errorLabel, rowsLabel, fieldsLabel) => {
+            if (errorLabel) {
+                console.log(errorLabel);
+                errorLabel.status = 3;
+                callback(errorLabel, rowsLabel, fieldsLabel);
+                return;
+            }
+            console.log("Added labels");
+            callback(errorLabel, rowsLabel, fields);
+        });
+    });
 };
 
 exports.addCredit = function(userId, transactionId, creditAmount, credit, creditOn, date, callback) {
@@ -136,6 +166,29 @@ function prepareApplyCreditData(parameters, credit) {
     }, {
         "id": credit ? parameters.credit : parameters.creditOn
     }];
+};
+
+function prepareSaveExpense(userId, expenseType, amount, creditDebit, date, description) {
+    let query = 'INSERT INTO Expenses SET ?',
+        data = {
+            "type": expenseType,
+            "amount": amount,
+            "credit_debit": creditDebit,
+            "user": userId
+        };
+
+    if (date) {
+        data.date = date;
+    }
+
+    if (description) {
+        data.description = description;
+    }
+
+    return {
+        "query": query,
+        "data": data
+    };
 };
 
 function prepareGetExpense(userId, transactionId) {

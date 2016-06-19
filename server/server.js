@@ -62,6 +62,8 @@ app.post("/expense", expenses.saveExpense());
 app.get("/label", labels.getLabels());
 app.post("/label", labels.createLabel());
 
+app.post("/addLabel", labels.addLabels());
+
 console.log("Starting...");
 
 server = app.listen(port, function () {

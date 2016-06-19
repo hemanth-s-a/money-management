@@ -33,7 +33,7 @@ CREATE TABLE Expenses (
 CREATE TABLE Labels (
     id bigint PRIMARY KEY AUTO_INCREMENT,
     name varchar(200) NOT NULL,
-    active int NOT NULL DEFAULT (1),
+    active int NOT NULL DEFAULT 1,
     user int NOT NULL,
     FOREIGN KEY(user) REFERENCES User(id) ON UPDATE cascade ON DELETE cascade
 );
