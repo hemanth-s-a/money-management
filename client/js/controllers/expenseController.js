@@ -78,7 +78,6 @@ function expenseController($scope, $location, expenseService, userStore, labelSe
 		expenseService.getExpenses({
 			"userId": self.userData.getId()
 		}).then(function(result) {
-			console.log(result);
 			$scope.expenseStore = result.data.expenses;
 		}, function(error) {
 			console.log(error);

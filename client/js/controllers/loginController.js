@@ -9,14 +9,12 @@ function loginController($scope, $location, userService, userStore) {
 
 	$scope.login = function() {
 		if (_validate()) {
-			console.log("Success");
 			userService.login({
 				"username": $scope.username,
 				"password": sha256_digest($scope.password)
 			}).then(function(result) {
 				self.userData.setName(result.data.userData.name);
 				self.userData.setId(result.data.userData.id);
-				console.log(result);
 				$location.path('/home');
 			}, function(error) {
 				console.log(error);
