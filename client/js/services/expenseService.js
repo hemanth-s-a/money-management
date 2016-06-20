@@ -16,14 +16,7 @@ function expenseService($http) {
 			"headers": {
 				"Content-Type": "application/json"
 			},
-			"data": {
-				"userId": data.userId,
-				"expenseType": data.type,
-				"amount": data.amount,
-				"creditDebit": 1,
-				"date": data.date,
-				"description": data.description
-			}
+			"data": data
 		});
 	};
 

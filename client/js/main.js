@@ -28,6 +28,16 @@ function($routeProvider) {
 			controller: 'expenseController'
 		})
 
+		.when('/createLabel', {
+			templateUrl: 'views/createLabel.html',
+			controller: 'labelController'
+		})
+
+		.when('/labels', {
+			templateUrl: 'views/label.html',
+			controller: 'labelController'
+		})
+
 		.when('/home', {
 			templateUrl: 'views/home.html'
 		})

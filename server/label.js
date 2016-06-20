@@ -25,6 +25,7 @@ exports.getLabels = function() {
                 return;
             }
             response.status(200).send({
+                "status": 0,
                 "labels": rows
             });
         });
@@ -41,6 +42,22 @@ exports.addLabels = function() {
             }
             response.status(200).send({
                 "status": 0
+            });
+        });
+    };
+};
+
+exports.getLabelsForTransaction = () => {
+    return (request, response) => {
+        labelBL.getLabelsForTransaction(request.query.transactionId, (error, rows, fields) => {
+            if (error) {
+                console.log(error);
+                response.status(500).send("Server error");
+                return;
+            }
+            response.status(200).send({
+                "status": 0,
+                "labels": rows
             });
         });
     };

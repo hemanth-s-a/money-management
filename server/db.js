@@ -17,6 +17,7 @@ exports.getQuery = function(query, data, callback) {
 };
 
 exports.query = function(query, data, callback) {
+    console.log(mysql.format(query, data));
     pool.getConnection(function(error, connection) {
         if (error) {
             console.error("MySQL query: " + query + "data: " + data);

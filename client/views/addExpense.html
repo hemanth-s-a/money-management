@@ -39,6 +39,16 @@
 				<input type="date" ng-model="date" />
 			</td>
 		</tr>
+		<tr>
+			<td>Labels</td>
+			<td>
+				<select multiple size="5" ng-model="selectedLabels">
+					<option ng-repeat="label in activeLabels" ng-value="label.id">
+						{{label.name}}
+					</option>
+				</select>
+			</td>
+		</tr>
 	</table>
 	<button ng-click="addExpense()">Add expense</button>
 </div>

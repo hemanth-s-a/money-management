@@ -1,13 +1,49 @@
 <span>Expenses</span>
+<div ng-init="getFilterOptions()">
+    <label>
+        Labels:
+        <select multiple size="5" ng-model="filteredLabels">
+            <option ng-repeat="label in labels" ng-value="label.id">
+                {{label.name}}
+            </option>
+        </select>
+    </label>
+    <label>
+        From:
+        <input type="date" ng-model="fromDate" />
+    </label>
+    <label>
+        To:
+        <input type="date" ng-model="toDate" />
+    </label>
+</div>
 <table ng-init="getExpenses()">
     <tr>
         <th>Date</th>
         <th>Description</th>
         <th>Amount</th>
+        <th>Labels</th>
     </tr>
     <tr ng-repeat="expense in expenseStore">
         <td>{{ expense.date }}</td>
         <td>{{ expense.description }}</td>
         <td>{{ expense.amount }}</td>
+        <td ng-click="getLabels(expense, $event)">
+            <span ng-if="expense.appliedLabels" ng-repeat="appliedLabel in expense.appliedLabels">
+                {{appliedLabel.name}}, 
+            </span>
+        </td>
+        <td>
+            <span ng-if="expense.showLabels">
+                <select multiple size="5" ng-model="expense.selectedLabels">
+                    <option ng-repeat="label in expense.labels" ng-value="label.id">
+                        {{label.name}}
+                    </option>
+                </select>
+                <button ng-click="addLabels(expense)">
+                    Add labels
+                </button>
+            </span>
+        </td>
     </tr>
 </table>

@@ -29,13 +29,30 @@ exports.addLabels = function(transactionId, labels, callback) {
         callback("TransactionID isn't specified");
         return;
     }
-    if (labels.length < 1) {
+    if (!labels || labels.length < 1) {
         callback("No labels to be added");
         return;
     }
     let queryAndData = prepareAddLabels(transactionId, labels);
     console.log(labels.length + "labels to be added");
     mysql.query(queryAndData.query, queryAndData.data, callback);
+};
+
+exports.getLabelsForTransaction = (transactionId, callback) => {
+    if (!transactionId) {
+        callback("TransactionID isn't specified");
+        return;
+    }
+    let queryAndData = prepareGetLabelsForTransaction(transactionId);
+    console.log("Gettings labels for transaction");
+    mysql.query(queryAndData.query, queryAndData.data, callback);
+};
+
+function prepareGetLabelsForTransaction(transactionId) {
+    return {
+        "query": 'SELECT a.label as id, l.name as name FROM AppliedLabels a, Labels l WHERE a.label=l.id AND a.transaction = ?',
+        "data": [transactionId]
+    };
 };
 
 function prepareAddLabels(transactionId, labels) {
@@ -45,6 +62,11 @@ function prepareAddLabels(transactionId, labels) {
     data = labels.map((labelId) => {
         return [transactionId, labelId];
     });
+
+    return {
+        "query": query,
+        "data": [data]
+    };
 };
 
 function prepareGetLabel(userId, active) {

@@ -1,0 +1,11 @@
+<span>Labels</span>
+<table ng-init="getLabels()">
+    <tr>
+        <th>Label</th>
+        <th>Status</th>
+    </tr>
+    <tr ng-repeat="label in labelStore">
+        <td>{{ label.name }}</td>
+        <td>{{ label.active == 1 ? "Active" : "Disabled" }}</td>
+    </tr>
+</table>
