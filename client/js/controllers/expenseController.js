@@ -79,6 +79,22 @@ function expenseController($scope, $location, expenseService, userStore, labelSe
 			"userId": self.userData.getId()
 		}).then(function(result) {
 			$scope.expenseStore = result.data.expenses;
+			labelService.getLabelsForUser({
+				"userId": self.userData.getId()
+			}).then((result) => {
+				for(let i = 0, j = 0, len = $scope.expenseStore.length, lenLabels = result.data.labels.length; i < len && j < lenLabels; i++) {
+					let k = false;
+					while(j < lenLabels && $scope.expenseStore[i].id == result.data.labels[j].expenseId) {
+						if (!k) {
+							k = true;
+							$scope.expenseStore[i].appliedLabels = [];
+						}
+						$scope.expenseStore[i].appliedLabels.push(result.data.labels[j++]);
+					}
+				}
+			}, (error) => {
+				console.log(error);
+			});
 		}, function(error) {
 			console.log(error);
 		});

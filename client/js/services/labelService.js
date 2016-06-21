@@ -18,6 +18,14 @@ function labelService($http) {
         });
     };
 
+    this.getLabelsForUser = (data) => {
+        return $http({
+            "method": "GET",
+            "url": "/labelsForUser",
+            "params": data
+        });
+    };
+
     this.createLabel = (data) => {
         return $http({
             "method": "POST",

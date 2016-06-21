@@ -61,6 +61,7 @@ app.post("/expense", expenses.saveExpense());
 
 app.get("/label", labels.getLabels());
 app.get("/labelsForTransaction", labels.getLabelsForTransaction());
+app.get("/labelsForUser", labels.getLabelsForUser());
 app.post("/label", labels.createLabel());
 
 app.post("/addLabel", labels.addLabels());

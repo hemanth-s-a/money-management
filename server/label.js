@@ -62,3 +62,19 @@ exports.getLabelsForTransaction = () => {
         });
     };
 };
+
+exports.getLabelsForUser = () => {
+    return (request, response) => {
+        labelBL.getLabelsForUser(request.query.userId, (error, rows, fields) => {
+            if (error) {
+                console.log(error);
+                response.status(500).send("Server error");
+                return;
+            }
+            response.status(200).send({
+                "status": 0,
+                "labels": rows
+            });
+        });
+    };
+};

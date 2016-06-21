@@ -48,6 +48,23 @@ exports.getLabelsForTransaction = (transactionId, callback) => {
     mysql.query(queryAndData.query, queryAndData.data, callback);
 };
 
+exports.getLabelsForUser = (userId, callback) => {
+    if (!userId) {
+        callback("UserID isn't specified");
+        return;
+    }
+    let queryAndData = prepareGetLabelsForUser(userId);
+    console.log("Getting labels for user");
+    mysql.query(queryAndData.query, queryAndData.data, callback);
+};
+
+function prepareGetLabelsForUser(userId) {
+    return {
+        "query": 'SELECT a.label as id, l.name as name, a.transaction as expenseId FROM AppliedLabels a, Labels l, Expenses e WHERE a.label=l.id AND a.transaction=e.id AND e.user = ? ORDER BY expenseId',
+        "data": [userId]
+    };
+};
+
 function prepareGetLabelsForTransaction(transactionId) {
     return {
         "query": 'SELECT a.label as id, l.name as name FROM AppliedLabels a, Labels l WHERE a.label=l.id AND a.transaction = ?',

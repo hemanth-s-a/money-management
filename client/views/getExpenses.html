@@ -3,7 +3,7 @@
     <label>
         Labels:
         <select multiple size="5" ng-model="filteredLabels">
-            <option ng-repeat="label in labels" ng-value="label.id">
+            <option ng-repeat="label in activeLabels" ng-value="label.id">
                 {{label.name}}
             </option>
         </select>

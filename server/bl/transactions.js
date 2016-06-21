@@ -194,7 +194,7 @@ function prepareSaveExpense(userId, expenseType, amount, creditDebit, date, desc
 function prepareGetExpense(userId, transactionId) {
     var query, data = [];
 
-    query = 'SELECT * FROM Expenses WHERE ?';
+    query = 'SELECT * FROM Expenses WHERE ? ORDER BY id';
     data.push({
         "user": userId
     });
