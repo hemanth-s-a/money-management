@@ -30,7 +30,7 @@ exports.addLabels = function(transactionId, labels, callback) {
         return;
     }
     if (!labels || labels.length < 1) {
-        callback("No labels to be added");
+        callback(null, "No labels to be added");
         return;
     }
     let queryAndData = prepareAddLabels(transactionId, labels);
