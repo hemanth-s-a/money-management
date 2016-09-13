@@ -36,7 +36,7 @@ process.on('exit', exitHandler.bind(null, {cleanup:true}));
 process.on('SIGINT', exitHandler.bind(null, {exit:true}));
 
 //catches uncaught exceptions
-process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+process.on('uncaughtException', exitHandler.bind(null, {exit:false}));
 
 app.use(cors());
 app.use(morgan(':remote-addr - :remote-user [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms'));
